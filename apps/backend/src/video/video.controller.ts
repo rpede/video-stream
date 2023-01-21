@@ -1,16 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { Video } from '@video-stream/interface';
+import { PrismaService } from './prisma.service';
 
 @Controller('videos')
 export class VideoController {
+  constructor(private readonly db: PrismaService) {}
+
   @Get()
-  get() {
-    return [
-      {
-        id: 1,
-        name: 'Me at the Zoo',
-        length: 20,
-      },
-    ] as Video[];
+  videos(): Promise<Video[]> {
+    return this.db.video.findMany();
   }
 }
