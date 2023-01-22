@@ -24,7 +24,15 @@ export class VideoController {
 
   @Get()
   videos(): Promise<Video[]> {
-    return this.db.video.findMany();
+    return this.db.video
+      .findMany()
+      .then((videos) =>
+        videos.map((video) => ({
+          id: video.id,
+          name: video.name,
+          size: video.size,
+        }))
+      );
   }
 
   @Get(':id')
