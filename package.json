@@ -4,12 +4,8 @@
   "license": "MIT",
   "scripts": {
     "setup": "npm ci && npm run sync",
-    "sync": "npx prisma generate && npx prisma db push && npm run seed",
-    "seed": "npx prisma db seed",
+    "sync": "npx prisma generate && npx prisma db push",
     "start": "npx nx run-many --target=serve"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +46,7 @@
     "@nrwl/webpack": "15.5.3",
     "@nrwl/workspace": "15.5.3",
     "@types/jest": "28.1.1",
+    "@types/multer": "^1.4.7",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",

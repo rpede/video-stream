@@ -1,5 +1,5 @@
 import { HttpClient, HttpEventType } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { finalize, Subscription } from 'rxjs';
 
 @Component({
@@ -9,6 +9,9 @@ import { finalize, Subscription } from 'rxjs';
 export class UploadComponent {
   @Input()
   requiredFileType: string | undefined;
+
+  @Output()
+  uploaded = new EventEmitter<void>();
 
   fileName = '';
   uploadProgress?: number;
@@ -22,14 +25,17 @@ export class UploadComponent {
     if (file) {
       this.fileName = file.name;
       const formData = new FormData();
-      formData.append('thumbnail', file);
+      formData.append('file', file);
 
       const upload$ = this.http
-        .post('/api/upload', formData, {
+        .post('/api/video/upload', formData, {
           reportProgress: true,
           observe: 'events',
         })
-        .pipe(finalize(() => this.reset()));
+        .pipe(finalize(() => {
+          this.reset();
+          this.uploaded.emit();
+        }));
 
       this.uploadSub = upload$.subscribe((event) => {
         if (event.type == HttpEventType.UploadProgress) {

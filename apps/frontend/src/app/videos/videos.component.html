@@ -1,5 +1,5 @@
 <!-- <video-stream-rounded-button>Upload</video-stream-rounded-button> -->
-<video-stream-upload></video-stream-upload>
+<video-stream-upload (uploaded)="load()"></video-stream-upload>
 <div class="flex flex-col">
   <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -23,7 +23,13 @@
                 scope="col"
                 class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Length
+                Size
+              </th>
+              <th
+                scope="col"
+                class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+              >
+                Watch
               </th>
             </tr>
           </thead>
@@ -42,7 +48,19 @@
               <td
                 class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
               >
-                {{ video.length }}s
+                {{ video.size }}s
+              </td>
+              <td
+                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+              >
+                <a [href]="'/api/video/' + video.id">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                      d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
+                    />
+                  </svg>
+                </a>
               </td>
             </tr>
           </tbody>

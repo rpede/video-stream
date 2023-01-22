@@ -11,7 +11,9 @@ datasource db {
 }
 
 model Video {
-  id Int @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String
-  length Int
+  size Int
+  path String
+  mimetype String
 }
