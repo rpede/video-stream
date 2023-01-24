@@ -27,6 +27,21 @@ export class VideoController {
     private readonly transcoder: TranscoderService
   ) { }
 
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async upload(@UploadedFile() file: Express.Multer.File) {
+    const video = await this.db.video.create({
+      data: {
+        name: file.originalname,
+        path: file.path,
+        size: file.size,
+        mimetype: file.mimetype,
+      },
+    });
+    return video;
+  }
+
+
   @Get()
   async videos(): Promise<Video[]> {
     const videos = await this.db.video.findMany();
@@ -47,19 +62,4 @@ export class VideoController {
     res.contentType(output.mimetype);
     return new StreamableFile(output.stream);
   }
-
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  async upload(@UploadedFile() file: Express.Multer.File) {
-    const video = await this.db.video.create({
-      data: {
-        name: file.originalname,
-        path: file.path,
-        size: file.size,
-        mimetype: file.mimetype,
-      },
-    });
-    return video;
-  }
-
 }
