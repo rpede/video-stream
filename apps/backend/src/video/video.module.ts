@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
+import { FfmpegProvider } from './ffmpeg';
 import { PrismaService } from './prisma.service';
 import { VideoController } from './video.controller';
 import { VideoService } from './video.service';
@@ -11,6 +12,6 @@ import { VideoService } from './video.service';
     }),
   ],
   controllers: [VideoController],
-  providers: [VideoService, PrismaService],
+  providers: [VideoService, PrismaService, FfmpegProvider],
 })
 export class VideoModule {}
