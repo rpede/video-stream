@@ -1,9 +1,7 @@
 import {
   Controller,
-  FileTypeValidator,
   Get,
   Param,
-  ParseFilePipe,
   ParseIntPipe,
   Post,
   Res,
@@ -30,6 +28,7 @@ export class VideoController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async upload(@UploadedFile() file: Express.Multer.File) {
+    // file is stored in ./upload
     const video = await this.db.video.create({
       data: {
         name: file.originalname,
