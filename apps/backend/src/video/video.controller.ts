@@ -50,14 +50,7 @@ export class VideoController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async upload(
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [new FileTypeValidator({ fileType: /video\/*/ })],
-      })
-    )
-    file: Express.Multer.File
-  ) {
+  async upload(@UploadedFile() file: Express.Multer.File) {
     const video = await this.db.video.create({
       data: {
         name: file.originalname,
