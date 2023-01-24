@@ -28,16 +28,13 @@ export class VideoController {
   ) { }
 
   @Get()
-  videos(): Promise<Video[]> {
-    return this.db.video
-      .findMany()
-      .then((videos) =>
-        videos.map((video) => ({
-          id: video.id,
-          name: video.name,
-          size: video.size,
-        }))
-      );
+  async videos(): Promise<Video[]> {
+    const videos = await this.db.video.findMany();
+    return videos.map((video) => ({
+      id: video.id,
+      name: video.name,
+      size: video.size,
+    }))
   }
 
   @Get(':id')
@@ -53,7 +50,7 @@ export class VideoController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  upload(
+  async upload(
     @UploadedFile(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: /video\/*/ })],
@@ -61,7 +58,7 @@ export class VideoController {
     )
     file: Express.Multer.File
   ) {
-    return this.db.video.create({
+    const video = await this.db.video.create({
       data: {
         name: file.originalname,
         path: file.path,
@@ -69,5 +66,7 @@ export class VideoController {
         mimetype: file.mimetype,
       },
     });
+    return video;
   }
+
 }
