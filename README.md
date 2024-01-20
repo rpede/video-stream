@@ -1,5 +1,9 @@
 # VideoStream
 
+Not a very efficient video streaming web app.
+
+Performance is intentionally bad, since it was supposed to be a tool used for teaching about scalability. 
+
 ## Prerequisite
 
 - node.js v16 to v19
